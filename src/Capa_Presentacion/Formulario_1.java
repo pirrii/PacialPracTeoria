@@ -1144,23 +1144,22 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
 
     private void jBGrabarCreaContraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGrabarCreaContraActionPerformed
         if ((ValidarInt(this.jTF_DocumentoE.getText().trim()))) {
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Verifique los datos ingresados que correspondan al tipo de dato y no exedan el tamaño minimo");
-        }
-        DataContrato objContrato = new DataContrato();
-        DataEmpleado objEmpleado = new DataEmpleado();
-        if (VerificarCamposContra() == true) {
-            if (verificarContrato(objContrato.BuscarContra(objEmpleado.buscarEmpleDoc(this.jTFDocCrearContra.getText()))) == true) {
-                JOptionPane.showMessageDialog(null, "Ya hay un contrato activo");
+            DataContrato objContrato = new DataContrato();
+            DataEmpleado objEmpleado = new DataEmpleado();
+            if (VerificarCamposContra() == true) {
+                if (verificarContrato(objContrato.BuscarContra(objEmpleado.buscarEmpleDoc(this.jTFDocCrearContra.getText()))) == true) {
+                    JOptionPane.showMessageDialog(null, "Ya hay un contrato activo");
+                } else {
+                    CrearContrato(this.jTFDocCrearContra.getText());
+                    ContratosEmpleado();
+                    ContratosEmpleado();
+                    ListarEmpleados();
+                }
             } else {
-                CrearContrato(this.jTFDocCrearContra.getText());
-                ContratosEmpleado();
-                ContratosEmpleado();
-                ListarEmpleados();
+                JOptionPane.showMessageDialog(null, "La información esta incompleta, por favor verifique");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "La información esta incompleta, por favor verifique");
+            JOptionPane.showMessageDialog(null, "Verifique los datos ingresados que correspondan al tipo de dato y no exedan el tamaño minimo");
         }
     }//GEN-LAST:event_jBGrabarCreaContraActionPerformed
 

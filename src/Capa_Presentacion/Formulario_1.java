@@ -21,40 +21,29 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *             ...:::::::...        ...:::::::...
-             .:::::::::::::::::. .::::::::::::::::::.
-          .::::::::::::::::::::::::::::::::::::::::::::.
-        .:::::::::::::::::::'.-=.-~, ':::::::::::::::::::.
-      .:::::::::::::::::::' /{,_;--'},'::::::::::::::::::::.
-     .:::::::::::::::::::: |  .=~`|//| :::::::::::::::::::::.
-    .::::::::::::::::::::: | /   ; \ | :::' __, '::::::::::::.
-   .:::::::::::::::::::::' ||    | | | :' .' \/\  ::::::::::::.
-  .:::::::::::::::::::::: |\|    | | |\  / \ /_|  :::::::::::::.
-  ::::::::::::::::::::::. \ |  | /|'/ / | \ /_ |  ::::::::::::::
-  ::::::::::::::' ,_ '::: `\ \/|/ / /`.: \ /__/  :::::::::::::::
-  :::::::::::::  /\/`'. ':. `\ `./.'/\ : /.--' .::::::::::::::::
-  :::::::::::::  |_\ / \  ::. '. ,/|\/| //  ''''':::::::::::::::
-  :::::::::::::  | _\ / | .::  | | \ \///  .""'-.  :::::::::::::
-  ::::::::::::::  \__\ / .: .'/| |  `)`/__//_/_/_\  ::::::::::::
-  '::::::::::::::  '--.\ : /\/_| |} /.---. \ \ \ /  :::::::::::'
-   '::::::::::::''     \\ |\/_/| | //`  . `'...-'  :::::::::::'
-    ::::::::::  .-""'.  \\\/ /{| |//  .:::::....::::::::::::::
-     ':::::::  /_\_\_\\__\`(`  | '/  :::::::::::::::::::::::'
-      '::::::  \ / / / .---.\  | |  :::::::::::::::::::::::'
-       '::::::. '-..,'` .:.`\\ | |} ::::::::::::::::::::::'
-         '::::::......:jgs:: \\| |  ::::::::::::::::::::'
-          ':::::::::::::::::: \` |  ::::::::::::::::::'
-            '::::::::::::::::  | |  ::::::::::::::::'
-              ':::::::::::::: {| |  ::::::::::::::'
-                '::::::::::::  | |  ::::::::::::'
-                  '::::::::::  | |  ::::::::::'
-                    '::::::::  | |} ::::::::'
-                      '::::::  | |  ::::::'
-                       ':::::. |/  ::::::'
-                         ':::.....:::::'
-                           ':::::::::'
-                             ':::::'
-                               ':'
+ * ...:::::::... ...:::::::... .:::::::::::::::::. .::::::::::::::::::.
+ * .::::::::::::::::::::::::::::::::::::::::::::. .:::::::::::::::::::'.-=.-~,
+ * ':::::::::::::::::::. .:::::::::::::::::::' /{,_;--'},'::::::::::::::::::::.
+ * .:::::::::::::::::::: | .=~`|//| :::::::::::::::::::::.
+ * .::::::::::::::::::::: | / ; \ | :::' __, '::::::::::::.
+ * .:::::::::::::::::::::' || | | | :' .' \/\ ::::::::::::.
+ * .:::::::::::::::::::::: |\| | | |\ / \ /_| :::::::::::::.
+ * ::::::::::::::::::::::. \ | | /|'/ / | \ /_ | :::::::::::::: ::::::::::::::'
+ * ,_ '::: `\ \/|/ / /`.: \ /__/ ::::::::::::::: ::::::::::::: /\/`'. ':. `\
+ * `./.'/\ : /.--' .:::::::::::::::: ::::::::::::: |_\ / \ ::. '. ,/|\/| //
+ * '''''::::::::::::::: ::::::::::::: | _\ / | .:: | | \ \/// .""'-.
+ * ::::::::::::: :::::::::::::: \__\ / .: .'/| | `)`/__//_/_/_\ ::::::::::::
+ * ':::::::::::::: '--.\ : /\/_| |} /.---. \ \ \ / :::::::::::' '::::::::::::''
+ * \\ |\/_/| | //` . `'...-' :::::::::::' :::::::::: .-""'. \\\/ /{| |//
+ * .:::::....:::::::::::::: '::::::: /_\_\_\\__\`(` | '/
+ * :::::::::::::::::::::::' ':::::: \ / / / .---.\ | | :::::::::::::::::::::::'
+ * '::::::. '-..,'` .:.`\\ | |} ::::::::::::::::::::::' '::::::......:jgs:: \\|
+ * | ::::::::::::::::::::' ':::::::::::::::::: \` | ::::::::::::::::::'
+ * ':::::::::::::::: | | ::::::::::::::::' ':::::::::::::: {| | ::::::::::::::'
+ * ':::::::::::: | | ::::::::::::' ':::::::::: | | ::::::::::' ':::::::: | |}
+ * ::::::::' ':::::: | | ::::::' ':::::. |/ ::::::' ':::.....:::::' ':::::::::'
+ * ':::::' ':'
+ *
  * @author jumem
  */
 public final class Formulario_1 extends javax.swing.JFrame {
@@ -68,6 +57,15 @@ public final class Formulario_1 extends javax.swing.JFrame {
         ListarEmpleados();
         this.jTabbedPane3.setEnabledAt(0, false);
         this.jTabbedPane3.setEnabledAt(1, false);
+    }
+
+    //=> Validar que los datos ingresados coincidan con el tipo de dato solicitado
+    public boolean ValidarInt(String Dato) {
+        return Dato.matches("[0,9]{1,25}");
+    }
+
+    public boolean ValidarString(String Dato) {
+        return Dato.matches("[a-zA-Z]{1,25}");
     }
 
     //=> Limpia la información de las cajas de texto.
@@ -442,7 +440,7 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
             JOptionPane.showMessageDialog(null, "El Documento no coincide con ningun registro");
         }
     }
-    
+
     public void ModificarContrato() {
         DataContrato objContrato = new DataContrato();
         DataEmpleado objEmpleado = new DataEmpleado();
@@ -1003,25 +1001,32 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
     }// </editor-fold>//GEN-END:initComponents
 
     private void jBGrabarCreaEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGrabarCreaEmpleadoActionPerformed
-
-        if (VerificarCampos() == true) {
-            GuardarEmpleado();
-            int r = JOptionPane.showConfirmDialog(null, "¿Desea crear un contrato al empleado?");
-            System.out.println(r);
-            if (r == 0) {
-                this.jTabbedPane3.setSelectedIndex(1);
-                this:jTFDocCrearContra.setText(this.jTF_DocumentoE.getText());
-                ContratosEmpleado();
+        if ((ValidarInt(this.jTF_DocumentoE.getText().trim())) || (ValidarString(this.jTF_NombreE.getText().trim())) || (ValidarString(this.jTF_ApellidosE.getText().trim())) || (ValidarInt(this.jTF_TelefonoE.getText().trim()))) {
+            if (VerificarCampos() == true) {
+                GuardarEmpleado();
+                int r = JOptionPane.showConfirmDialog(null, "¿Desea crear un contrato al empleado?");
+                System.out.println(r);
+                if (r == 0) {
+                    this.jTabbedPane3.setSelectedIndex(1);
+                    this:jTFDocCrearContra.setText(this.jTF_DocumentoE.getText());
+                    ContratosEmpleado();
+                } else {
+                    LimpiarCajasTexto();
+                }
             } else {
-                LimpiarCajasTexto();
+                JOptionPane.showMessageDialog(null, "La información esta incompleta, por favor verifique");
             }
         } else {
-            JOptionPane.showMessageDialog(null, "La información esta incompleta, por favor verifique");
+            JOptionPane.showMessageDialog(null, "Verifique los datos ingresados que correspondan al tipo de dato y no exedan el tamaño minimo");
         }
     }//GEN-LAST:event_jBGrabarCreaEmpleadoActionPerformed
 
     private void jBDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDesactivarActionPerformed
-        DesactivarEmpleado();
+        if ((ValidarInt(this.jTF_DocumentoE.getText().trim()))) {
+            DesactivarEmpleado();
+        } else {
+            JOptionPane.showMessageDialog(null, "Verifique los datos ingresados que correspondan al tipo de dato y no exedan el tamaño minimo");
+        }
     }//GEN-LAST:event_jBDesactivarActionPerformed
 
     private void jTableEActivosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableEActivosMousePressed
@@ -1071,11 +1076,14 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
     }//GEN-LAST:event_jTF_TelefonoEActionPerformed
 
     private void jBModificarEmpleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificarEmpleActionPerformed
-
-        if (VerificarCampos() == true) {
-            ModificarEmpleado();
+        if ((ValidarInt(this.jTF_DocumentoE.getText().trim())) || (ValidarString(this.jTF_NombreE.getText().trim())) || (ValidarString(this.jTF_ApellidosE.getText().trim())) || (ValidarInt(this.jTF_TelefonoE.getText().trim()))) {
+            if (VerificarCampos() == true) {
+                ModificarEmpleado();
+            } else {
+                JOptionPane.showMessageDialog(null, "llenne correctamente los datos");
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "llenne correctamente los datos");
+            JOptionPane.showMessageDialog(null, "Verifique los datos ingresados que correspondan al tipo de dato y no exedan el tamaño minimo");
         }
     }//GEN-LAST:event_jBModificarEmpleActionPerformed
 
@@ -1088,26 +1096,38 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ContratosEmpleado();
+        if ((ValidarInt(this.jTF_DocumentoE.getText().trim()))) {
+            ContratosEmpleado();
+        } else {
+            JOptionPane.showMessageDialog(null, "Verifique los datos ingresados que correspondan al tipo de dato y no exedan el tamaño minimo");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jBDesactivar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDesactivar1ActionPerformed
-        if (VerificarCamposContra() == true) {
-            DesactivarContrato();
-            ContratosEmpleado();
-            ListarEmpleados();
-        } else{
-            JOptionPane.showMessageDialog(null, "La información esta incompleta, por favor verifique");
+        if ((ValidarInt(this.jTF_DocumentoE.getText().trim()))) {
+            if (VerificarCamposContra() == true) {
+                DesactivarContrato();
+                ContratosEmpleado();
+                ListarEmpleados();
+            } else {
+                JOptionPane.showMessageDialog(null, "La información esta incompleta, por favor verifique");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Verifique los datos ingresados que correspondan al tipo de dato y no exedan el tamaño minimo");
         }
     }//GEN-LAST:event_jBDesactivar1ActionPerformed
 
     private void jBModificarContraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBModificarContraActionPerformed
-        if (VerificarCamposContra() == true) {
-            ModificarContrato();
-            ContratosEmpleado();
-            ListarEmpleados();
+        if ((ValidarInt(this.jTF_DocumentoE.getText().trim()))) {
+            if (VerificarCamposContra() == true) {
+                ModificarContrato();
+                ContratosEmpleado();
+                ListarEmpleados();
+            } else {
+                JOptionPane.showMessageDialog(null, "La información esta incompleta, por favor verifique");
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "La información esta incompleta, por favor verifique");
+            JOptionPane.showMessageDialog(null, "Verifique los datos ingresados que correspondan al tipo de dato y no exedan el tamaño minimo");
         }
     }//GEN-LAST:event_jBModificarContraActionPerformed
 
@@ -1123,6 +1143,11 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
     }//GEN-LAST:event_jBLimpiar2ActionPerformed
 
     private void jBGrabarCreaContraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBGrabarCreaContraActionPerformed
+        if ((ValidarInt(this.jTF_DocumentoE.getText().trim()))) {
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Verifique los datos ingresados que correspondan al tipo de dato y no exedan el tamaño minimo");
+        }
         DataContrato objContrato = new DataContrato();
         DataEmpleado objEmpleado = new DataEmpleado();
         if (VerificarCamposContra() == true) {
@@ -1140,25 +1165,15 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
     }//GEN-LAST:event_jBGrabarCreaContraActionPerformed
 
     /**
- ░░░░░░░░░░░░░░░░░░░░░░░░░
-░░░░░░▄█░░░░░░░░░░░░██░░
-░░░░░▄██░░░░░░░░░░░███░░░
-░░░░░███░░░░░░░░░░████░░░
-░░░░████░░▄▄▄▄░░░█████░░░
-░░░███████████████████░░░
-░░░███████████████████░░░
-░▄█████████████████████░░
-░██████████████████████░░
-░██████████████████████░░
-░█░▀████████▀░▄████████░░
-▄██▄▄█████▄▄▄██████████▄░
-██▀███████▀▀█▀▀░░███████░
-░█░░░▀▀▀░░░░▀▀░░░███████░
-░█░░░████▄░░░░░░░████████
-░█░░░░░░░░░░░░░░░████████
-░██░░░░░░░░░░░░░░████████
-░▀█░░░░░░░░░░░░▄█████████
-*           batman approves
+     * ░░░░░░░░░░░░░░░░░░░░░░░░░ ░░░░░░▄█░░░░░░░░░░░░██░░
+     * ░░░░░▄██░░░░░░░░░░░███░░░ ░░░░░███░░░░░░░░░░████░░░
+     * ░░░░████░░▄▄▄▄░░░█████░░░ ░░░███████████████████░░░
+     * ░░░███████████████████░░░ ░▄█████████████████████░░
+     * ░██████████████████████░░ ░██████████████████████░░
+     * ░█░▀████████▀░▄████████░░ ▄██▄▄█████▄▄▄██████████▄░
+     * ██▀███████▀▀█▀▀░░███████░ ░█░░░▀▀▀░░░░▀▀░░░███████░
+     * ░█░░░████▄░░░░░░░████████ ░█░░░░░░░░░░░░░░░████████
+     * ░██░░░░░░░░░░░░░░████████ ░▀█░░░░░░░░░░░░▄█████████ batman approves
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

@@ -19,7 +19,6 @@ public class DataArea {
     private String area_nom;
     private String area_state;
     private final String dec = "GEMPLEADO";
-    private int a ;
 
     public DataArea() {
     }

@@ -28,7 +28,7 @@ public class DataContrato {
     public DataContrato() {
     }
 
-    //=> Manda la instruccion para crea un contrato en la base de datos.
+    //=> Manda la instruccion para crea un contrato en la base de datosa.
     public String GrabarContrato() {
         Conexion objmod = new Conexion();
         String cad = "insert into contrato values(default,'" + this.getContrato_fechaI()

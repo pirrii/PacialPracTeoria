@@ -16,6 +16,8 @@ import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -34,8 +36,18 @@ public final class Formulario_1 extends javax.swing.JFrame {
         llenaComboCargo();
         LimpiarCajasTexto();
         ListarEmpleados();
+        SetearMinFecha();
         this.jTabbedPane3.setEnabledAt(0, false);
         this.jTabbedPane3.setEnabledAt(1, false);
+    }
+
+    public void SetearMinFecha() {
+
+        try {
+            this.jDFechas.setMinSelectableDate(FechaString_aDate(FechaActual()));
+        } catch (ParseException ex) {
+
+        }
     }
 
     //=> Validar que los datos ingresados coincidan con el tipo de dato solicitado
@@ -161,6 +173,27 @@ public final class Formulario_1 extends javax.swing.JFrame {
         }
     }
 
+    public void BuscarEmpleado() {
+        DataArea objArea = new DataArea();
+        DataCargo objCargo = new DataCargo();
+        DataContrato objContrato = new DataContrato();
+        DataEmpleado objEmpleado = new DataEmpleado();
+        String h = this.jTF_DocumentoE.getText();
+        ArrayList<DataEmpleado> listaActivo = new ArrayList();
+        listaActivo = objEmpleado.ListaEmpleadosActivos();
+
+        for (DataEmpleado x : listaActivo) {
+        if (x.getEmple_doc() == (Integer.parseInt(h))) {
+            
+            this.jTF_NombreE.setText(x.getEmple_nom());
+            this.jTF_ApellidosE.setText(x.getEmple_ape());
+            this.jTF_TelefonoE.setText(x.getEmple_tel());
+
+        }
+      
+        }
+    }
+
     //=> Consulta los cargos existentes en la tabla cargo y los inserta en el comboBox como items.
     public void llenaComboCargo() {
 
@@ -244,37 +277,6 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
 
     }
 
-    public void ContratosEmpleado() {
-        DataArea objArea = new DataArea();
-        DataCargo objCargo = new DataCargo();
-        DataContrato objContrato = new DataContrato();
-        DataEmpleado objEmpleado = new DataEmpleado();
-        DefaultTableModel tablaCont = new DefaultTableModel();
-        ArrayList<DataContrato> lista2 = new ArrayList();
-        lista2 = objContrato.ListaContratos();
-        int h = objEmpleado.buscarEmpleDoc(this.jTFDocCrearContra.getText());
-        tablaCont.addColumn("Id Contrato");
-        tablaCont.addColumn("Cargo");
-        tablaCont.addColumn("Area");
-        tablaCont.addColumn("Fecha Inicio");
-        tablaCont.addColumn("Fecha Fin");
-        tablaCont.addColumn("Estado");
-        tablaCont.setRowCount(lista2.size());
-        int i = 0;
-        for (DataContrato x : lista2) {
-            if (x.getFkemple_id() == (h)) {
-                tablaCont.setValueAt(x.getContrato_id(), i, 0);
-                tablaCont.setValueAt(objCargo.BuscarCarg(x.getFkcargo_id()), i, 1);
-                tablaCont.setValueAt(objArea.BuscarArea(x.getFkarea_id()), i, 2);
-                tablaCont.setValueAt(x.getContrato_fechaI(), i, 3);
-                tablaCont.setValueAt(x.getContrato_fechaF(), i, 4);
-                tablaCont.setValueAt(x.getContrato_state(), i, 5);
-                i++;
-            }
-        }
-        this.jTablaContratos.setModel(tablaCont);
-    }
-
     public void CrearContrato(String DocEmpleado) {
         DataArea objArea = new DataArea();
         DataCargo objCargo = new DataCargo();
@@ -319,25 +321,31 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
         ListarEmpleados();
     }
 
-    public void ListarContrato() {
+    public void ContratosEmpleado() {
+        DataArea objArea = new DataArea();
+        DataCargo objCargo = new DataCargo();
         DataContrato objContrato = new DataContrato();
+        DataEmpleado objEmpleado = new DataEmpleado();
         DefaultTableModel tablaCont = new DefaultTableModel();
         ArrayList<DataContrato> lista2 = new ArrayList();
         lista2 = objContrato.ListaContratos();
-        String h = this.jLIDEmpleado.getText();
+        int h = objEmpleado.buscarEmpleDoc(this.jTFDocCrearContra.getText());
         tablaCont.addColumn("Id Contrato");
+        tablaCont.addColumn("Cargo");
+        tablaCont.addColumn("Area");
         tablaCont.addColumn("Fecha Inicio");
         tablaCont.addColumn("Fecha Fin");
         tablaCont.addColumn("Estado");
         tablaCont.setRowCount(lista2.size());
         int i = 0;
         for (DataContrato x : lista2) {
-            System.out.println("vueta " + i + " codigo= " + x.getFkemple_id());
-            if (x.getFkemple_id() == (Integer.parseInt(h))) {
+            if (x.getFkemple_id() == (h)) {
                 tablaCont.setValueAt(x.getContrato_id(), i, 0);
-                tablaCont.setValueAt(x.getContrato_fechaI(), i, 1);
-                tablaCont.setValueAt(x.getContrato_fechaF(), i, 2);
-                tablaCont.setValueAt(x.getContrato_state(), i, 3);
+                tablaCont.setValueAt(objCargo.BuscarCarg(x.getFkcargo_id()), i, 1);
+                tablaCont.setValueAt(objArea.BuscarArea(x.getFkarea_id()), i, 2);
+                tablaCont.setValueAt(x.getContrato_fechaI(), i, 3);
+                tablaCont.setValueAt(x.getContrato_fechaF(), i, 4);
+                tablaCont.setValueAt(x.getContrato_state(), i, 5);
                 i++;
             }
         }
@@ -478,6 +486,8 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTablaEInactivos = new javax.swing.JTable();
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jBLimpiar1 = new javax.swing.JButton();
@@ -495,8 +505,6 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableEActivos = new javax.swing.JTable();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTablaEInactivos = new javax.swing.JTable();
         jBSalir2 = new javax.swing.JButton();
         jBDesactivar = new javax.swing.JButton();
         jBModificarEmple = new javax.swing.JButton();
@@ -504,6 +512,7 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
         jButton2 = new javax.swing.JButton();
         jL_IDContrato = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jBbuscarEmp = new javax.swing.JButton();
         jPCreaContrato = new javax.swing.JPanel();
         jLTituloCreaContrato = new javax.swing.JLabel();
         jLDocCrearContra = new javax.swing.JLabel();
@@ -535,6 +544,24 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 100, Short.MAX_VALUE)
         );
+
+        jTablaEInactivos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTablaEInactivos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTablaEInactivosMousePressed(evt);
+            }
+        });
+        jScrollPane3.setViewportView(jTablaEInactivos);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
@@ -622,26 +649,6 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
 
         jTabbedPane1.addTab("Empleados Activos", jScrollPane2);
 
-        jTablaEInactivos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTablaEInactivos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jTablaEInactivosMousePressed(evt);
-            }
-        });
-        jScrollPane3.setViewportView(jTablaEInactivos);
-
-        jTabbedPane1.addTab("Empleados Inactivos", jScrollPane3);
-
         jBSalir2.setFont(new java.awt.Font("Yu Gothic UI", 0, 12)); // NOI18N
         jBSalir2.setText("Salir");
         jBSalir2.addActionListener(new java.awt.event.ActionListener() {
@@ -683,6 +690,13 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
 
         jLabel1.setText("id contrato:");
 
+        jBbuscarEmp.setText("Buscar");
+        jBbuscarEmp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBbuscarEmpActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -713,9 +727,12 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
                             .addComponent(jLIDEmpleado1))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jTF_DocumentoE, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLIDEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLIDEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jBbuscarEmp))
                                 .addComponent(jTF_NombreE, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jTF_ApellidosE, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -749,7 +766,8 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLIDEmpleado1)
-                            .addComponent(jLIDEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLIDEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBbuscarEmp))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLDocumentoE1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -785,7 +803,7 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
                                 .addComponent(jBModificarEmple)
                                 .addComponent(jBGrabarCreaEmpleado))
                             .addComponent(jBLimpiar1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 30, Short.MAX_VALUE))))
         );
 
         jTabbedPane3.addTab("Empleados", jPanel2);
@@ -1040,13 +1058,13 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
         this.jL_IDContrato.setText(jTableEActivos.getValueAt(rec, 7).toString());
         this.jComboBoxCargo.setSelectedItem(jTableEActivos.getValueAt(rec, 5).toString());
         this.jComboBoxArea.setSelectedItem(jTableEActivos.getValueAt(rec, 6).toString());
-        ListarContrato();//INVOCAMOS EL METODO QUE NOS PERMITIRA VIZUALISAR LOS CONTRATOS POR EMPLEADO ACTIVO.
+        ContratosEmpleado();//INVOCAMOS EL METODO QUE NOS PERMITIRA VIZUALISAR LOS CONTRATOS POR EMPLEADO ACTIVO.
+
     }//GEN-LAST:event_jTableEActivosMousePressed
 
     private void jTablaEInactivosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablaEInactivosMousePressed
-        int rec = this.jTablaEInactivos.getSelectedRow();
-        this.jLIDEmpleado.setText(jTablaEInactivos.getValueAt(rec, 0).toString());
-        ListarContrato();//INVOCAMOS EL METODO QUE NOS PERMITIRA VIZUALISAR LOS CONTRATOS POR EMPLEADO INACTIVO.
+        LimpiarCajasTexto();
+        LimpiarCajasTextocont();
     }//GEN-LAST:event_jTablaEInactivosMousePressed
 
     private void jTF_DocumentoEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTF_DocumentoEActionPerformed
@@ -1094,7 +1112,9 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
 
         } else {
             this.jTabbedPane3.setSelectedIndex(1);
+            //this.jTFDocCrearContra.setText(this.jTF_DocumentoE.getText());
             ContratosEmpleado();
+
         }
 
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -1104,12 +1124,14 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-      if ((ValidarInt(this.jTF_DocumentoE.getText().trim()))) {         
-            ContratosEmpleado();
-            ImprimirDatosContratoCBOX();
-      } else {
-            JOptionPane.showMessageDialog(null, "Verifique los datos ingresados que correspondan al tipo de dato y no exedan el tamaño minimo");
-       }
+     if ((ValidarInt(this.jTF_DocumentoE.getText().trim()))) {
+        ContratosEmpleado();
+        ImprimirDatosContratoCBOX();
+        this.jTF_DocumentoE.setText(this.jTFDocCrearContra.getText());
+        BuscarEmpleado();
+         } else {
+        JOptionPane.showMessageDialog(null, "Verifique los datos ingresados que correspondan al tipo de dato y no exedan el tamaño minimo");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jBDesactivar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDesactivar1ActionPerformed
@@ -1171,6 +1193,10 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
         }
     }//GEN-LAST:event_jBGrabarCreaContraActionPerformed
 
+    private void jBbuscarEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBbuscarEmpActionPerformed
+         BuscarEmpleado();
+    }//GEN-LAST:event_jBbuscarEmpActionPerformed
+
     /**
      *
      *
@@ -1226,9 +1252,11 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
     private javax.swing.JButton jBModificarEmple;
     private javax.swing.JButton jBSalir;
     private javax.swing.JButton jBSalir2;
+    private javax.swing.JButton jBbuscarEmp;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBoxArea;
     private javax.swing.JComboBox<String> jComboBoxCargo;
     private com.toedter.calendar.JDateChooser jDFechas;

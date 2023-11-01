@@ -21,28 +21,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * ...:::::::... ...:::::::... .:::::::::::::::::. .::::::::::::::::::.
- * .::::::::::::::::::::::::::::::::::::::::::::. .:::::::::::::::::::'.-=.-~,
- * ':::::::::::::::::::. .:::::::::::::::::::' /{,_;--'},'::::::::::::::::::::.
- * .:::::::::::::::::::: | .=~`|//| :::::::::::::::::::::.
- * .::::::::::::::::::::: | / ; \ | :::' __, '::::::::::::.
- * .:::::::::::::::::::::' || | | | :' .' \/\ ::::::::::::.
- * .:::::::::::::::::::::: |\| | | |\ / \ /_| :::::::::::::.
- * ::::::::::::::::::::::. \ | | /|'/ / | \ /_ | :::::::::::::: ::::::::::::::'
- * ,_ '::: `\ \/|/ / /`.: \ /__/ ::::::::::::::: ::::::::::::: /\/`'. ':. `\
- * `./.'/\ : /.--' .:::::::::::::::: ::::::::::::: |_\ / \ ::. '. ,/|\/| //
- * '''''::::::::::::::: ::::::::::::: | _\ / | .:: | | \ \/// .""'-.
- * ::::::::::::: :::::::::::::: \__\ / .: .'/| | `)`/__//_/_/_\ ::::::::::::
- * ':::::::::::::: '--.\ : /\/_| |} /.---. \ \ \ / :::::::::::' '::::::::::::''
- * \\ |\/_/| | //` . `'...-' :::::::::::' :::::::::: .-""'. \\\/ /{| |//
- * .:::::....:::::::::::::: '::::::: /_\_\_\\__\`(` | '/
- * :::::::::::::::::::::::' ':::::: \ / / / .---.\ | | :::::::::::::::::::::::'
- * '::::::. '-..,'` .:.`\\ | |} ::::::::::::::::::::::' '::::::......:jgs:: \\|
- * | ::::::::::::::::::::' ':::::::::::::::::: \` | ::::::::::::::::::'
- * ':::::::::::::::: | | ::::::::::::::::' ':::::::::::::: {| | ::::::::::::::'
- * ':::::::::::: | | ::::::::::::' ':::::::::: | | ::::::::::' ':::::::: | |}
- * ::::::::' ':::::: | | ::::::' ':::::. |/ ::::::' ':::.....:::::' ':::::::::'
- * ':::::' ':'
+ *
  *
  * @author jumem
  */
@@ -158,6 +137,27 @@ public final class Formulario_1 extends javax.swing.JFrame {
         lista2 = objArea.ListaAreas();
         for (DataArea x : lista2) {
             this.jComboBoxArea.addItem(x.getArea_nom());
+        }
+    }
+
+    public void ImprimirDatosContratoCBOX() {
+        DataArea objArea = new DataArea();
+        DataCargo objCargo = new DataCargo();
+        DataContrato objContrato = new DataContrato();
+        DataEmpleado objEmpleado = new DataEmpleado();
+        String h = this.jTFDocCrearContra.getText();
+        ArrayList<DataEmpleado> listaActivo = new ArrayList();
+        listaActivo = objEmpleado.ListaEmpleadosActivos();
+
+        for (DataEmpleado x : listaActivo) {
+            if (x.getEmple_doc() == (Integer.parseInt(h))) {
+
+                this.jComboBoxArea.setSelectedItem(objArea.BuscarArea(objContrato.BuscarContraArea(objContrato.BuscarContra(x.getEmple_id()))));
+                System.out.println("si fui yo : " + objArea.BuscarArea(objContrato.BuscarContraArea(objContrato.BuscarContra(x.getEmple_id()))));
+
+                this.jComboBoxCargo.setSelectedItem(objCargo.BuscarCarg(objContrato.BuscarContraCarg(objContrato.BuscarContra(x.getEmple_id()))));
+                System.out.println("tambien fui yo : " + objCargo.BuscarCarg(objContrato.BuscarContraCarg(objContrato.BuscarContra(x.getEmple_id()))));
+            }
         }
     }
 
@@ -324,7 +324,7 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
         DefaultTableModel tablaCont = new DefaultTableModel();
         ArrayList<DataContrato> lista2 = new ArrayList();
         lista2 = objContrato.ListaContratos();
-        String h = this.jLIDEmpleado.getText();////////////////////busqueda de id por doc???? 
+        String h = this.jLIDEmpleado.getText();
         tablaCont.addColumn("Id Contrato");
         tablaCont.addColumn("Fecha Inicio");
         tablaCont.addColumn("Fecha Fin");
@@ -333,7 +333,7 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
         int i = 0;
         for (DataContrato x : lista2) {
             System.out.println("vueta " + i + " codigo= " + x.getFkemple_id());
-            if (x.getFkemple_id() == (Integer.parseInt(h))) {////////////////////////error aqui
+            if (x.getFkemple_id() == (Integer.parseInt(h))) {
                 tablaCont.setValueAt(x.getContrato_id(), i, 0);
                 tablaCont.setValueAt(x.getContrato_fechaI(), i, 1);
                 tablaCont.setValueAt(x.getContrato_fechaF(), i, 2);
@@ -1033,6 +1033,7 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
         int rec = this.jTableEActivos.getSelectedRow();
         this.jLIDEmpleado.setText(jTableEActivos.getValueAt(rec, 0).toString());
         this.jTF_DocumentoE.setText(jTableEActivos.getValueAt(rec, 1).toString());
+        this.jTFDocCrearContra.setText(jTableEActivos.getValueAt(rec, 1).toString());
         this.jTF_NombreE.setText(jTableEActivos.getValueAt(rec, 2).toString());
         this.jTF_ApellidosE.setText(jTableEActivos.getValueAt(rec, 3).toString());
         this.jTF_TelefonoE.setText(jTableEActivos.getValueAt(rec, 4).toString());
@@ -1088,7 +1089,14 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
     }//GEN-LAST:event_jBModificarEmpleActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        this.jTabbedPane3.setSelectedIndex(1);
+        if (this.jTFDocCrearContra.getText().equals("")) {
+            this.jTabbedPane3.setSelectedIndex(1);
+
+        } else {
+            this.jTabbedPane3.setSelectedIndex(1);
+            ContratosEmpleado();
+        }
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -1096,11 +1104,12 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if ((ValidarInt(this.jTF_DocumentoE.getText().trim()))) {
+      if ((ValidarInt(this.jTF_DocumentoE.getText().trim()))) {         
             ContratosEmpleado();
-        } else {
+            ImprimirDatosContratoCBOX();
+      } else {
             JOptionPane.showMessageDialog(null, "Verifique los datos ingresados que correspondan al tipo de dato y no exedan el tamaño minimo");
-        }
+       }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jBDesactivar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDesactivar1ActionPerformed
@@ -1152,7 +1161,6 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
                 } else {
                     CrearContrato(this.jTFDocCrearContra.getText());
                     ContratosEmpleado();
-                    ContratosEmpleado();
                     ListarEmpleados();
                 }
             } else {
@@ -1164,15 +1172,9 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
     }//GEN-LAST:event_jBGrabarCreaContraActionPerformed
 
     /**
-     * ░░░░░░░░░░░░░░░░░░░░░░░░░ ░░░░░░▄█░░░░░░░░░░░░██░░
-     * ░░░░░▄██░░░░░░░░░░░███░░░ ░░░░░███░░░░░░░░░░████░░░
-     * ░░░░████░░▄▄▄▄░░░█████░░░ ░░░███████████████████░░░
-     * ░░░███████████████████░░░ ░▄█████████████████████░░
-     * ░██████████████████████░░ ░██████████████████████░░
-     * ░█░▀████████▀░▄████████░░ ▄██▄▄█████▄▄▄██████████▄░
-     * ██▀███████▀▀█▀▀░░███████░ ░█░░░▀▀▀░░░░▀▀░░░███████░
-     * ░█░░░████▄░░░░░░░████████ ░█░░░░░░░░░░░░░░░████████
-     * ░██░░░░░░░░░░░░░░████████ ░▀█░░░░░░░░░░░░▄█████████ batman approves
+     *
+     *
+     *
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

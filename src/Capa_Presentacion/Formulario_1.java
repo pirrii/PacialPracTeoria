@@ -53,11 +53,11 @@ public final class Formulario_1 extends javax.swing.JFrame {
 
     //=> Validar que los datos ingresados coincidan con el tipo de dato solicitado
     public boolean ValidarInt(String Dato) {
-        return Dato.matches("[0,9]{1,25}");
+        return Dato.matches("[a-zA-Z]{1,25}");
     }
 
     public boolean ValidarString(String Dato) {
-        return Dato.matches("[a-zA-Z]{1,25}");
+        return Dato.matches("[0,9]{1,25}");
     }
 
     //=> Limpia la información de las cajas de texto.

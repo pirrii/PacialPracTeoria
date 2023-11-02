@@ -44,6 +44,7 @@ public final class Formulario_1 extends javax.swing.JFrame {
     public void SetearMinFecha() {
 
         try {
+            int a;
             this.jDFechas.setMinSelectableDate(FechaString_aDate(FechaActual()));
         } catch (ParseException ex) {
 
@@ -1124,14 +1125,14 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-     if ((ValidarInt(this.jTF_DocumentoE.getText().trim()))) {
+//     if ((ValidarInt(this.jTF_DocumentoE.getText().trim()))) {
         ContratosEmpleado();
         ImprimirDatosContratoCBOX();
         this.jTF_DocumentoE.setText(this.jTFDocCrearContra.getText());
         BuscarEmpleado();
-         } else {
+  //       } else {
         JOptionPane.showMessageDialog(null, "Verifique los datos ingresados que correspondan al tipo de dato y no exedan el tamaño minimo");
-        }
+    //    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jBDesactivar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDesactivar1ActionPerformed

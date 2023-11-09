@@ -1,11 +1,3 @@
-/*
-────────────────╔═.✰.═══╗
-──▄████▄▄░─✰ＨＯＬＡ
-─▄▀█▀▐└─┐░░╚═══.✰.═╝
-─█▄▐▌▄█▄┘██────────
-─└▄▄▄▄▄┘███────────
-▄██▒█▒███▀─────────.
- */
 package Capa_Presentacion;
 
 import Capa_Negocio.DataArea;
@@ -39,6 +31,8 @@ public final class Formulario_1 extends javax.swing.JFrame {
         SetearMinFecha();
         this.jTabbedPane3.setEnabledAt(0, false);
         this.jTabbedPane3.setEnabledAt(1, false);
+        this.jComboBoxAreaNomina.setEnabled(false);
+        this.jTDocumentoNomina.setEnabled(false);
     }
 
     public void SetearMinFecha() {
@@ -150,6 +144,8 @@ public final class Formulario_1 extends javax.swing.JFrame {
         lista2 = objArea.ListaAreas();
         for (DataArea x : lista2) {
             this.jComboBoxArea.addItem(x.getArea_nom());
+            this.jComboBoxAreaNomina.addItem(x.getArea_nom());
+
         }
     }
 
@@ -184,14 +180,14 @@ public final class Formulario_1 extends javax.swing.JFrame {
         listaActivo = objEmpleado.ListaEmpleadosActivos();
 
         for (DataEmpleado x : listaActivo) {
-        if (x.getEmple_doc() == (Integer.parseInt(h))) {
-            
-            this.jTF_NombreE.setText(x.getEmple_nom());
-            this.jTF_ApellidosE.setText(x.getEmple_ape());
-            this.jTF_TelefonoE.setText(x.getEmple_tel());
+            if (x.getEmple_doc() == (Integer.parseInt(h))) {
 
-        }
-      
+                this.jTF_NombreE.setText(x.getEmple_nom());
+                this.jTF_ApellidosE.setText(x.getEmple_ape());
+                this.jTF_TelefonoE.setText(x.getEmple_tel());
+
+            }
+
         }
     }
 
@@ -489,6 +485,17 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTablaEInactivos = new javax.swing.JTable();
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
+        buttonGroup4 = new javax.swing.ButtonGroup();
+        buttonGroup5 = new javax.swing.ButtonGroup();
+        buttonGroup6 = new javax.swing.ButtonGroup();
+        buttonGroup7 = new javax.swing.ButtonGroup();
+        buttonGroup8 = new javax.swing.ButtonGroup();
+        buttonGroup9 = new javax.swing.ButtonGroup();
+        buttonGroup10 = new javax.swing.ButtonGroup();
+        buttonGroup11 = new javax.swing.ButtonGroup();
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jBLimpiar1 = new javax.swing.JButton();
@@ -534,6 +541,16 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
         jBDesactivar1 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jComboBoxAreaNomina = new javax.swing.JComboBox<>();
+        jLabel5 = new javax.swing.JLabel();
+        jTDocumentoNomina = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        jCseccionNomina = new javax.swing.JComboBox<>();
+        jLabel6 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -791,8 +808,7 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
                                 .addComponent(jLabel1))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(54, 54, 54)
-                                .addComponent(jL_IDContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(62, 62, 62))
+                                .addComponent(jL_IDContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -803,8 +819,8 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
                                 .addComponent(jBDesactivar)
                                 .addComponent(jBModificarEmple)
                                 .addComponent(jBGrabarCreaEmpleado))
-                            .addComponent(jBLimpiar1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 30, Short.MAX_VALUE))))
+                            .addComponent(jBLimpiar1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 30, Short.MAX_VALUE))
         );
 
         jTabbedPane3.addTab("Empleados", jPanel2);
@@ -1003,17 +1019,102 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
 
         jTabbedPane3.addTab("contratos", jPCreaContrato);
 
+        jPanel3.setBackground(new java.awt.Color(255, 0, 204));
+
+        jLabel2.setText("Nomina");
+
+        jLabel4.setText("area");
+
+        jComboBoxAreaNomina.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "" }));
+        jComboBoxAreaNomina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxAreaNominaActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("doc");
+
+        jButton4.setText("Buscar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jCseccionNomina.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Planta", "Area", "Empleado" }));
+        jCseccionNomina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCseccionNominaActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("consultar");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(74, 74, 74)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(98, 98, 98)
+                                .addComponent(jButton4))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(46, 46, 46)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jCseccionNomina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBoxAreaNomina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTDocumentoNomina, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(141, 141, 141)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(845, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jLabel2)
+                .addGap(42, 42, 42)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jCseccionNomina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addGap(28, 28, 28)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxAreaNomina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jTDocumentoNomina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(jButton4)
+                .addContainerGap(65, Short.MAX_VALUE))
+        );
+
+        jTabbedPane3.addTab("tab2", jPanel3);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1124, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 1124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 9, Short.MAX_VALUE))
+            .addComponent(jTabbedPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -1130,9 +1231,9 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
         ImprimirDatosContratoCBOX();
         this.jTF_DocumentoE.setText(this.jTFDocCrearContra.getText());
         BuscarEmpleado();
-  //       } else {
+        //       } else {
         JOptionPane.showMessageDialog(null, "Verifique los datos ingresados que correspondan al tipo de dato y no exedan el tamaño minimo");
-    //    }
+        //    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jBDesactivar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBDesactivar1ActionPerformed
@@ -1195,8 +1296,30 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
     }//GEN-LAST:event_jBGrabarCreaContraActionPerformed
 
     private void jBbuscarEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBbuscarEmpActionPerformed
-         BuscarEmpleado();
+        BuscarEmpleado();
     }//GEN-LAST:event_jBbuscarEmpActionPerformed
+
+    private void jComboBoxAreaNominaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxAreaNominaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxAreaNominaActionPerformed
+    private void jCseccionNominaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCseccionNominaActionPerformed
+        switch (this.jCseccionNomina.getSelectedItem().toString()) {
+            case "Planta":
+                this.jComboBoxAreaNomina.setEnabled(false);
+                this.jTDocumentoNomina.setEnabled(false);
+                break;
+                case "Area":
+                    this.jComboBoxAreaNomina.setEnabled(true);
+                break;
+                case "Empleado":
+                this.jComboBoxAreaNomina.setEnabled(false);
+                this.jTDocumentoNomina.setEnabled(true);
+                break;         
+        }
+    }//GEN-LAST:event_jCseccionNominaActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      *
@@ -1243,6 +1366,17 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup10;
+    private javax.swing.ButtonGroup buttonGroup11;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.ButtonGroup buttonGroup4;
+    private javax.swing.ButtonGroup buttonGroup5;
+    private javax.swing.ButtonGroup buttonGroup6;
+    private javax.swing.ButtonGroup buttonGroup7;
+    private javax.swing.ButtonGroup buttonGroup8;
+    private javax.swing.ButtonGroup buttonGroup9;
     private javax.swing.JButton jBDesactivar;
     private javax.swing.JButton jBDesactivar1;
     private javax.swing.JButton jBGrabarCreaContra;
@@ -1259,7 +1393,9 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JComboBox<String> jComboBoxArea;
+    private javax.swing.JComboBox<String> jComboBoxAreaNomina;
     private javax.swing.JComboBox<String> jComboBoxCargo;
+    private javax.swing.JComboBox<String> jCseccionNomina;
     private com.toedter.calendar.JDateChooser jDFechas;
     private javax.swing.JLabel jLApellidosE1;
     private javax.swing.JLabel jLAreaCreaContra;
@@ -1275,13 +1411,20 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
     private javax.swing.JLabel jLTituloCreaContrato;
     private javax.swing.JLabel jL_IDContrato;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPCreaContrato;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane20;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField jTDocumentoNomina;
     private javax.swing.JTextPane jTFDocCrearContra;
     private javax.swing.JTextField jTF_ApellidosE;
     private javax.swing.JTextField jTF_DocumentoE;

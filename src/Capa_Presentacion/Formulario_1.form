@@ -853,8 +853,12 @@
                                       <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jCseccionNomina" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jComboBoxAreaNomina" min="-2" max="-2" attributes="0"/>
                                           <Component id="jTDocumentoNomina" min="-2" pref="110" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jComboBoxAreaNomina" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="227" max="-2" attributes="0"/>
+                                              <Component id="Resul" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                   </Group>
                               </Group>
@@ -864,7 +868,7 @@
                               <Component id="jLabel2" min="-2" pref="68" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="845" max="32767" attributes="0"/>
+                      <EmptySpace pref="585" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -884,6 +888,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" pref="22" max="-2" attributes="0"/>
                           <Component id="jComboBoxAreaNomina" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="Resul" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -961,6 +966,14 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="consultar"/>
               </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="Resul">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="jTextField1"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ResulActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

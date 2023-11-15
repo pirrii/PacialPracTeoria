@@ -25,8 +25,7 @@ public class DataEmpleado {
     private String emple_state;
     private final String dec = "GEMPLEADO";
 
-    public DataEmpleado() {
-    }
+    
 
     //=> Manda la instruccion para crea un empleado en la base de datos.
     public String GrabarEmpleado() {
@@ -37,6 +36,8 @@ public class DataEmpleado {
         System.out.println(cad);
         return objmod.Ejecutar(cad, dec);
     }
+    
+    
     
     //=> Manda la instruccion para hacer cambios a la tabla empleado en la base de datos.
     public String EditarEmpleado() {

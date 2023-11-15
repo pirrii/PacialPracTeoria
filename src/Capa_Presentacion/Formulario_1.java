@@ -4,6 +4,7 @@ import Capa_Negocio.DataArea;
 import Capa_Negocio.DataCargo;
 import Capa_Negocio.DataContrato;
 import Capa_Negocio.DataEmpleado;
+import Capa_Negocio.DataConsultas;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,6 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import Capa_Datos.Conexion;
 
 /**
  *
@@ -551,6 +553,7 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
         jButton4 = new javax.swing.JButton();
         jCseccionNomina = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
+        Resul = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -1050,6 +1053,13 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
 
         jLabel6.setText("consultar");
 
+        Resul.setText("jTextField1");
+        Resul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ResulActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -1071,12 +1081,15 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
                                 .addGap(46, 46, 46)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jCseccionNomina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jComboBoxAreaNomina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTDocumentoNomina, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(jTDocumentoNomina, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jComboBoxAreaNomina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(227, 227, 227)
+                                        .addComponent(Resul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(141, 141, 141)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(845, Short.MAX_VALUE))
+                .addContainerGap(585, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1092,7 +1105,8 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
                 .addGap(28, 28, 28)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxAreaNomina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxAreaNomina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Resul, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -1308,18 +1322,56 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
                 this.jComboBoxAreaNomina.setEnabled(false);
                 this.jTDocumentoNomina.setEnabled(false);
                 break;
-                case "Area":
-                    this.jComboBoxAreaNomina.setEnabled(true);
+            case "Area":
+                this.jComboBoxAreaNomina.setEnabled(true);
                 break;
-                case "Empleado":
+            case "Empleado":
                 this.jComboBoxAreaNomina.setEnabled(false);
                 this.jTDocumentoNomina.setEnabled(true);
-                break;         
+                break;
         }
     }//GEN-LAST:event_jCseccionNominaActionPerformed
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        DataConsultas oo = new DataConsultas();
+         DataEmpleado objEmpleado = new DataEmpleado();
+        switch (this.jCseccionNomina.getSelectedItem().toString()) {
+            
+            case "Planta":
+                System.out.println("plantq");
+                oo.ConsultarPlanta();
+                break;
+            case "Area":
+                System.out.println("are");
+                switch (this.jComboBoxAreaNomina.getSelectedItem().toString()) {
+                    case "CALIDAD":
+                        oo.setFkarea_id(2);
+                       oo.ConsultarArea();
+                       
+                        break;
+                    case "ADMINISTRACION":
+                        oo.setFkarea_id(3);
+                       oo.ConsultarArea();
+                        break;
+                        
+                    case "OPERACION":
+                        oo.setFkarea_id(1);
+                        oo.ConsultarArea();
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+                break;
+            case "Empleado":
+           oo.setFkemple_id(objEmpleado.buscarEmpleDoc(jTDocumentoNomina.getText()));
+            oo.ConsultarEmpleado();
+                break;
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void ResulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResulActionPerformed
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_ResulActionPerformed
 
     /**
      *
@@ -1366,6 +1418,7 @@ METODOS DE VERIFICACION DE EXISTENCIAS TANTO EN TABLA COMO EN TEXT_FIELDS*/
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Resul;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup10;
     private javax.swing.ButtonGroup buttonGroup11;

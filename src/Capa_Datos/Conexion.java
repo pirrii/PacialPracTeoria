@@ -12,6 +12,7 @@ package Capa_Datos;
 import java.sql.*;
 
 public class Conexion {
+
     // SE crean variables para 
     private final String url = "jdbc:mysql://localhost:3306/";
     private final String user = "root";
@@ -21,10 +22,11 @@ public class Conexion {
     {
     }
 //=> no se XD
+
     public ResultSet Listar(String Cad, String dec) {
         try {
-           
-            Connection cn = DriverManager.getConnection(url+dec, user, pwd);
+
+            Connection cn = DriverManager.getConnection(url + dec, user, pwd);
             PreparedStatement da = cn.prepareStatement(Cad);
             ResultSet tbl = da.executeQuery();
             return tbl;
@@ -34,7 +36,8 @@ public class Conexion {
         }
     }
 //=> muesta si el comado se ingreso correctamente.
-    public String AnalisisUpdates(int r) {  
+
+    public String AnalisisUpdates(int r) {
         if (r == 0) {
             return "No se afecto ninguna fila, verifique la información";
         } else {
@@ -45,17 +48,41 @@ public class Conexion {
             }
         }
     }
+
     //=>  Entablamos el enlase con la baser de datos.
     public String Ejecutar(String Cad, String dec) {
         try {
-            Connection cn = DriverManager.getConnection(url+dec, user, pwd);
+            Connection cn = DriverManager.getConnection(url + dec, user, pwd);
             PreparedStatement da = cn.prepareStatement(Cad);
             int r = da.executeUpdate();
             return AnalisisUpdates(r);
 
         } catch (SQLException e) {
-            javax.swing.JOptionPane.showMessageDialog(null, e.getMessage()+"error aca");
+            javax.swing.JOptionPane.showMessageDialog(null, e.getMessage());
             return "Error " + e.getMessage();
         }
     }
+
+    public int Consultar(String Cad, String dec) {
+        try {
+            Connection cn = DriverManager.getConnection(url + dec, user, pwd);
+
+            PreparedStatement da = cn.prepareStatement(Cad);
+             ResultSet  r = da.executeQuery();        
+                 if (r.next()) {
+                int resultado = r.getInt(1);
+                System.out.println("Resultado: " + resultado);
+                
+                return resultado;
+            } else {
+                System.out.println("No se encontraron resultados.");
+            }
+             
+        } catch (SQLException e) {
+            javax.swing.JOptionPane.showMessageDialog(null, e.getMessage());
+         
+        }     
+        return 0;
+    }
+    
 }
